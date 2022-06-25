@@ -1,0 +1,9 @@
+user SUB
+topic read assets/bitcoin
+topic read assets/dogecoin
+topic read assets/ethereum
+
+user PUB
+topic write assets/bitcoin
+topic write assets/dogecoin
+topic write assets/ethereum
