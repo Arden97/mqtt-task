@@ -1,4 +1,3 @@
-import json
 from utils import *
 import paho.mqtt.client as mqtt
 
@@ -45,12 +44,12 @@ class Subscriber(mqtt.Client):
         self.on_message = on_message
         self.username_pw_set(self.name, "password")
 
-    def update(data, value, new_value):
+    def update(self, data, value, new_value):
         asset = data['id']
+        data[value] = str(new_value)
         logging.info('Updating '+asset)
-        data[value] = new_value
-        post = requests.post('http://127.0.0.1:8000/update/'+asset, data=data, headers='Content-Type: application/json')
-        post.json()
+        patch = requests.patch('http://127.0.0.1:8000/update/'+asset, json=data)
+        print(f"{patch.json()['message']}")
 
     def set_cert(self, path):
         self.tls_set(path,tls_version=2)
